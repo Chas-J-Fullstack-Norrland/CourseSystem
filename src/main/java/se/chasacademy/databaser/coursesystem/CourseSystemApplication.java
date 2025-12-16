@@ -30,7 +30,7 @@ public class CourseSystemApplication implements CommandLineRunner {
             this.sessionRepository =sessionRepository;
 }
 
-	public static void main(String[] args) {}
+	public static void main(String[] args) {SpringApplication.run(CourseSystemApplication.class,args);}
 
 	@Override
 	public void run(String... args) {
