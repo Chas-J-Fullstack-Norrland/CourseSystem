@@ -1,7 +1,9 @@
 package se.chasacademy.databaser.coursesystem.model;
 
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import se.chasacademy.databaser.coursesystem.models.Participant;
 
 import java.util.ArrayList;
 import java.util.*;
@@ -13,7 +15,9 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotNull
+    @Size(min = 2, max = 150)
+    @Column(nullable = false, length = 150)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -21,13 +25,14 @@ public class Course {
     private Teacher teacher;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CourseSessions> sessions = new ArrayList<>();
+    private List<CourseSession> sessions = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
             name = "course_participants",
             joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "participant_id")
+            inverseJoinColumns = @JoinColumn(name = "participant_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "participant_id"})
     )
     private Set<Participant> participants = new HashSet<>();
 
@@ -55,11 +60,11 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public List<Course> sessions() {
+    public List<CourseSession> sessions() {
         return sessions;
     }
 
-    public void setSessions(List<Course> sessions) {
+    public void setSessions(List<CourseSession> sessions) {
         this.sessions = sessions;
     }
 
