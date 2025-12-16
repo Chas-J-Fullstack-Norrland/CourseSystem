@@ -1,6 +1,7 @@
 package se.chasacademy.databaser.coursesystem.models;
 
 import jakarta.persistence.*;
+import se.chasacademy.databaser.coursesystem.repository.CourseSessionRepository;
 
 import java.time.LocalDate;
 
@@ -21,5 +22,37 @@ public class CourseSession {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    public CourseSession() {}
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 }

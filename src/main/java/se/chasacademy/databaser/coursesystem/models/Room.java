@@ -24,6 +24,13 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<CourseSession> sessions = new ArrayList<>();
 
+    public Room() {}
+
+    public Room(String name, String adress, int capacity) {
+        this.name = name;
+        this.adress = adress;
+        this.capacity = capacity;
+    }
 
     public Long getId() {
         return id;
