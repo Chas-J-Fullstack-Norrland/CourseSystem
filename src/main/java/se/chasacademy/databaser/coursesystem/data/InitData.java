@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import se.chasacademy.databaser.coursesystem.repository.ParticipantRepository;
-import se.chasacademy.databaser.coursesystem.repository.RoomRepository;
 import se.chasacademy.databaser.coursesystem.repository.TeacherRepository;
 
 @Component
