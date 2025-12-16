@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import se.chasacademy.databaser.coursesystem.models.Teacher;
 
 @Repository
-public interface TeacherRepository implements JpaRepository<Teacher, Long> {
+public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     Teacher findByEmail(String email);
 }
