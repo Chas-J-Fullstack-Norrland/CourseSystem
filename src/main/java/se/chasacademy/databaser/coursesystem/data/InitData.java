@@ -2,6 +2,7 @@ package se.chasacademy.databaser.coursesystem.data;
 
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import se.chasacademy.databaser.coursesystem.models.*;
 import se.chasacademy.databaser.coursesystem.repository.*;
@@ -10,6 +11,7 @@ import se.chasacademy.databaser.coursesystem.validation.CourseValidator;
 import java.time.LocalDate;
 import java.util.List;
 
+@Order(1)
 @Component
 public class InitData implements CommandLineRunner {
     private final TeacherRepository teacherRepo;
@@ -67,7 +69,7 @@ public class InitData implements CommandLineRunner {
         Room r1 = roomRepo.findByName("Sal A");
 
         Course c1 = new Course("DataInstuderingskurs", 20);
-        c1.setTeacher(t1); // Nu finns t1 tillgänglig
+        c1.setTeacher(t1);
         courseRepo.save(c1);
 
         List<Participant> students = participantRepo.findAll();
