@@ -2,6 +2,9 @@ package se.chasacademy.databaser.coursesystem.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Room {
 
@@ -17,6 +20,9 @@ public class Room {
 
     @Column(nullable = false, columnDefinition = "INT CHECK(capacity>0)")
     private int capacity;
+
+    @OneToMany(mappedBy = "room")
+    private List<CourseSession> sessions = new ArrayList<>();
 
 
     public Long getId() {
