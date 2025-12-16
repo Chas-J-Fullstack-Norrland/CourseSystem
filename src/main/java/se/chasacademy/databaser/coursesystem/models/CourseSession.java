@@ -21,5 +21,7 @@ public class CourseSession {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    private LocalDateTime startTime;
+
 
 }

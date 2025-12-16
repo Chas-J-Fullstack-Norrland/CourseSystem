@@ -71,3 +71,9 @@ public class Course {
         this.participants = participants;
     }
 }
+public boolean isFull() {
+    return participants.size() >= maxParticipants;
+    if (course.isFull()) {
+        //fullbokad
+    }
+}
