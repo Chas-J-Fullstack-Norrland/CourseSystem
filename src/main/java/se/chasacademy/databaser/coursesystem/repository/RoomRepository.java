@@ -6,4 +6,5 @@ import se.chasacademy.databaser.coursesystem.models.Room;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room,Long> {
+    Room findByName(String name);
 }
