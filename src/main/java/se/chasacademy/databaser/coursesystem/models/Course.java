@@ -24,7 +24,7 @@ public class Course {
 
     @Min(1)
     @Max(50)
-    private int maxParticipants;
+    public int maxParticipants;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
@@ -48,7 +48,7 @@ public class Course {
         this.maxParticipants = maxParticipants;
     }
 
-    public Long id() {
+    public Long getId() {
         return id;
     }
 
@@ -56,15 +56,31 @@ public class Course {
         this.id = id;
     }
 
-    public String name() {
+    public String getTitle() {
         return title;
     }
 
-    public void setName(String name) {
-        this.title = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Teacher teacher() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getMaxParticipants() {
+        return maxParticipants;
+    }
+
+    public void setMaxParticipants(int maxParticipants) {
+        this.maxParticipants = maxParticipants;
+    }
+
+    public Teacher getTeacher() {
         return teacher;
     }
 
@@ -72,7 +88,7 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public List<CourseSession> sessions() {
+    public List<CourseSession> getSessions() {
         return sessions;
     }
 
@@ -80,7 +96,7 @@ public class Course {
         this.sessions = sessions;
     }
 
-    public Set<Participant> participants() {
+    public Set<Participant> getParticipants() {
         return participants;
     }
 

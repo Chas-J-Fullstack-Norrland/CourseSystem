@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import se.chasacademy.databaser.coursesystem.models.*;
 import se.chasacademy.databaser.coursesystem.repository.*;
+import se.chasacademy.databaser.coursesystem.validation.CourseValidator;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,15 +17,17 @@ public class InitData implements CommandLineRunner {
     private final ParticipantRepository participantRepo;
     private final RoomRepository roomRepo;
     private final CourseSessionRepository sessionRepo;
+    private final CourseValidator validator;
 
     public InitData(TeacherRepository teacherRepo, CourseRepository courseRepo,
                            ParticipantRepository participantRepo, RoomRepository roomRepo,
-                           CourseSessionRepository sessionRepo) {
+                           CourseSessionRepository sessionRepo, CourseValidator validator) {
         this.teacherRepo = teacherRepo;
         this.courseRepo = courseRepo;
         this.participantRepo = participantRepo;
         this.roomRepo = roomRepo;
         this.sessionRepo = sessionRepo;
+        this.validator = validator;
     }
 
     @Override
@@ -63,30 +66,35 @@ public class InitData implements CommandLineRunner {
         Teacher t1 = teacherRepo.findByEmail("anna@mymail.com");
         Room r1 = roomRepo.findByName("Sal A");
 
-        // Skapa Kurser och koppla till Lärare
         Course c1 = new Course("DataInstuderingskurs", 20);
-        c1.setTeacher(t1);
-
-        Course c2 = new Course("Försvar mot Ints", 30);
-        c2.setTeacher(t1);
-
-        courseRepo.saveAll(List.of(c1, c2));
-
-        List<Participant> students = participantRepo.findAll();
-        c1.participants().addAll(students);
+        c1.setTeacher(t1); // Nu finns t1 tillgänglig
         courseRepo.save(c1);
 
-        // Skapa CourseSessions (Kurstillfällen)
+        List<Participant> students = participantRepo.findAll();
+
+        try {
+            if (students.size() > c1.getMaxParticipants()) {
+                validator.validateCourseCapacity(c1);
+            }
+
+            c1.getParticipants().addAll(students);
+            courseRepo.save(c1);
+
+        } catch (Exception e) {
+            System.out.println("VALIDERINGSFEL FÅNGAT: " + e.getMessage());
+        }
+
+        // --- Validera CourseSession ---
         CourseSession s1 = new CourseSession();
         s1.setCourse(c1);
         s1.setRoom(r1);
         s1.setDate(LocalDate.now().plusDays(2));
 
-        CourseSession s2 = new CourseSession();
-        s2.setCourse(c1);
-        s2.setRoom(r1);
-        s2.setDate(LocalDate.now().plusDays(9));
-
-        sessionRepo.saveAll(List.of(s1, s2));
+        try {
+            validator.validateSession(s1);
+            sessionRepo.save(s1);
+        } catch (Exception e) {
+            System.out.println("Kunde inte skapa pass: " + e.getMessage());
+        }
     }
 }

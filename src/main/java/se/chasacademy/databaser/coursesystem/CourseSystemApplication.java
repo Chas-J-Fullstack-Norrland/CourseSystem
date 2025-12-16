@@ -3,7 +3,6 @@ package se.chasacademy.databaser.coursesystem;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import se.chasacademy.databaser.coursesystem.models.CourseSession;
 import se.chasacademy.databaser.coursesystem.repository.*;
 
 @SpringBootApplication
@@ -30,7 +29,9 @@ public class CourseSystemApplication implements CommandLineRunner {
             this.sessionRepository =sessionRepository;
 }
 
-	public static void main(String[] args) {}
+    public static void main(String[] args) {
+        SpringApplication.run(CourseSystemApplication.class, args);
+    }
 
 	@Override
 	public void run(String... args) {
