@@ -3,8 +3,11 @@ package se.chasacademy.databaser.coursesystem.data;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import se.chasacademy.databaser.coursesystem.repository.ParticipantRepository;
-import se.chasacademy.databaser.coursesystem.repository.TeacherRepository;
+import se.chasacademy.databaser.coursesystem.models.*;
+import se.chasacademy.databaser.coursesystem.repository.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Component
 public class InitData implements CommandLineRunner {
@@ -70,19 +73,19 @@ public class InitData implements CommandLineRunner {
         courseRepo.saveAll(List.of(c1, c2));
 
         List<Participant> students = participantRepo.findAll();
-        c1.getParticipants().addAll(students);
+        c1.participants().addAll(students);
         courseRepo.save(c1);
 
         // Skapa CourseSessions (Kurstillfällen)
         CourseSession s1 = new CourseSession();
         s1.setCourse(c1);
         s1.setRoom(r1);
-        s1.setDate(LocalDateTime.now().plusDays(2));
+        s1.setDate(LocalDate.now().plusDays(2));
 
         CourseSession s2 = new CourseSession();
         s2.setCourse(c1);
         s2.setRoom(r1);
-        s2.setDate(LocalDateTime.now().plusDays(9));
+        s2.setDate(LocalDate.now().plusDays(9));
 
         sessionRepo.saveAll(List.of(s1, s2));
     }

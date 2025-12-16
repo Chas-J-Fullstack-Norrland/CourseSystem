@@ -2,6 +2,9 @@ package se.chasacademy.databaser.coursesystem.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.*;
@@ -13,8 +16,15 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(nullable = false)
-    private String name;
+    private String title;
+
+    private String description;
+
+    @Min(1)
+    @Max(50)
+    private int maxParticipants;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
@@ -31,6 +41,13 @@ public class Course {
     )
     private Set<Participant> participants = new HashSet<>();
 
+    public Course() {}
+
+    public Course(String title, int maxParticipants) {
+        this.title = title;
+        this.maxParticipants = maxParticipants;
+    }
+
     public Long id() {
         return id;
     }
@@ -40,11 +57,11 @@ public class Course {
     }
 
     public String name() {
-        return name;
+        return title;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.title = name;
     }
 
     public Teacher teacher() {
