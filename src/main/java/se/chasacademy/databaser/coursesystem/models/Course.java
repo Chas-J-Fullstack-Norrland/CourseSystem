@@ -1,4 +1,4 @@
-package se.chasacademy.databaser.coursesystem.model;
+package se.chasacademy.databaser.coursesystem.models;
 
 
 import jakarta.persistence.*;
@@ -21,7 +21,7 @@ public class Course {
     private Teacher teacher;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CourseSessions> sessions = new ArrayList<>();
+    private List<CourseSession> sessions = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -55,11 +55,11 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public List<Course> sessions() {
+    public List<CourseSession> sessions() {
         return sessions;
     }
 
-    public void setSessions(List<Course> sessions) {
+    public void setSessions(List<CourseSession> sessions) {
         this.sessions = sessions;
     }
 
