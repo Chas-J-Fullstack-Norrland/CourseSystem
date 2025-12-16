@@ -19,17 +19,12 @@ public class Teacher {
     @NotNull @Column(nullable = false, unique = true)
     private String email;
 
+    public Teacher(){}
+
     public Teacher(String firstname,String lastname, String email){
         this.firstName = firstname;
         this.lastName=lastname;
         this.email = email;
-    }
-
-    public Teacher(String firstname,String lastname, String email,List<Course> courselist){
-        this.firstName = firstname;
-        this.lastName=lastname;
-        this.email = email;
-        this.courses = courselist;
     }
 
 
