@@ -18,4 +18,9 @@ public class CourseSession {
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+
 }

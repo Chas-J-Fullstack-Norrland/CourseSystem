@@ -2,6 +2,7 @@ package se.chasacademy.databaser.coursesystem.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Room {
     private int capacity;
 
     @OneToMany(mappedBy = "room")
-    private List<CourseSession> sessions;
+    private List<CourseSession> sessions = new ArrayList<>();
 
 
     public Long getId() {
