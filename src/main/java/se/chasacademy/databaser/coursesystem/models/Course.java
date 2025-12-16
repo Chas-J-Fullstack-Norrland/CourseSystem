@@ -1,10 +1,9 @@
 package se.chasacademy.databaser.coursesystem.models;
 
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import se.chasacademy.databaser.coursesystem.models.Participant;
 
 import java.util.ArrayList;
 import java.util.*;
@@ -17,14 +16,9 @@ public class Course {
     private Long id;
 
     @NotNull
-    @Column(nullable = false)
-    private String title;
-
-    private String description;
-
-    @Min(1)
-    @Max(50)
-    private int maxParticipants;
+    @Size(min = 2, max = 150)
+    @Column(nullable = false, length = 150)
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
@@ -37,16 +31,10 @@ public class Course {
     @JoinTable(
             name = "course_participants",
             joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "participant_id")
+            inverseJoinColumns = @JoinColumn(name = "participant_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "participant_id"})
     )
     private Set<Participant> participants = new HashSet<>();
-
-    public Course() {}
-
-    public Course(String title, int maxParticipants) {
-        this.title = title;
-        this.maxParticipants = maxParticipants;
-    }
 
     public Long id() {
         return id;
@@ -57,11 +45,11 @@ public class Course {
     }
 
     public String name() {
-        return title;
+        return name;
     }
 
     public void setName(String name) {
-        this.title = name;
+        this.name = name;
     }
 
     public Teacher teacher() {
