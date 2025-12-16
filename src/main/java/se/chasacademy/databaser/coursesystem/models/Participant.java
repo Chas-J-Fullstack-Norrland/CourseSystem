@@ -2,6 +2,7 @@ package se.chasacademy.databaser.coursesystem.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import se.chasacademy.databaser.coursesystem.model.Course;
 
 import java.util.ArrayList;
 import java.util.List;

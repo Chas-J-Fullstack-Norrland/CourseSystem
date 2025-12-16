@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/coursesystem
     username: postgres
-    password: postgres
+    password: ${PG_PASSWORD}
   jpa:
     hibernate.ddl-auto: create
     show-sql: true
